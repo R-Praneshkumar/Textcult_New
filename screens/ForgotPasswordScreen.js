@@ -1,0 +1,161 @@
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  StatusBar,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+
+const ForgotPasswordScreen = () => {
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="dark-content" />
+      <Header />
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <Text style={styles.title}>Forgot Password?</Text>
+          <Text style={styles.subtitle}>
+            Enter the email address associated with your account and we'll send you a link to reset your password.
+          </Text>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Email Address</Text>
+            <View style={styles.inputWrapper}>
+              <MaterialIcons name="mail" size={24} color="rgba(81, 59, 86, 0.4)" style={styles.inputIcon} />
+              <TextInput
+                style={styles.input}
+                placeholder="you@example.com"
+                placeholderTextColor="rgba(81, 59, 86, 0.4)"
+                keyboardType="email-address"
+              />
+            </View>
+          </View>
+          <TouchableOpacity style={styles.resetButton}>
+            <Text style={styles.resetButtonText}>Send Reset Link</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.footer}>
+        <TouchableOpacity>
+          <Text style={styles.footerText}>Back to Sign In</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const Header = () => (
+  <View style={styles.header}>
+    <TouchableOpacity>
+      <MaterialIcons name="arrow-back" size={24} color="#513B56" />
+    </TouchableOpacity>
+    <View style={styles.logoContainer}>
+      <MaterialIcons name="hub" size={30} color="#FF6B6B" />
+      <Text style={styles.logoText}>TextileFlow</Text>
+    </View>
+    <View style={{ width: 24 }} />
+  </View>
+);
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#F9F5F0', // soft-cream
+    fontFamily: 'Manrope_400Regular',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    height: 64,
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  logoText: {
+    fontSize: 20,
+    fontFamily: 'Manrope_700Bold',
+    color: '#513B56', // deep-violet
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+  content: {
+    width: '100%',
+    maxWidth: 448,
+  },
+  title: {
+    fontSize: 32,
+    fontFamily: 'Manrope_800ExtraBold',
+    color: '#513B56',
+    textAlign: 'center',
+  },
+  subtitle: {
+    marginTop: 12,
+    fontSize: 16,
+    color: 'rgba(81, 59, 86, 0.8)',
+    textAlign: 'center',
+    lineHeight: 24,
+  },
+  inputContainer: {
+    marginTop: 32,
+  },
+  label: {
+    fontSize: 14,
+    fontFamily: 'Manrope_700Bold',
+    color: '#513B56',
+    marginBottom: 8,
+    paddingHorizontal: 4,
+  },
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 9999,
+    height: 56,
+  },
+  inputIcon: {
+    marginLeft: 16,
+  },
+  input: {
+    flex: 1,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: '#513B56',
+    fontFamily: 'Manrope_400Regular',
+  },
+  resetButton: {
+    marginTop: 32,
+    backgroundColor: '#513B56',
+    borderRadius: 9999,
+    height: 56,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  resetButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontFamily: 'Manrope_700Bold',
+    letterSpacing: 0.5,
+  },
+  footer: {
+    padding: 24,
+    alignItems: 'center',
+  },
+  footerText: {
+    fontSize: 14,
+    fontFamily: 'Manrope_700Bold',
+    color: '#FF6B6B', // coral
+  },
+});
+
+export default ForgotPasswordScreen;
