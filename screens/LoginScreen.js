@@ -16,6 +16,7 @@ import { Picker } from '@react-native-picker/picker';
 const LoginScreen = ({ navigation }) => {
   const [emailUserType, setEmailUserType] = useState('buyer');
   const [phoneUserType, setPhoneUserType] = useState('buyer');
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
     <ImageBackground
@@ -42,13 +43,28 @@ const LoginScreen = ({ navigation }) => {
                 placeholder="Email"
                 placeholderTextColor="rgba(255, 255, 255, 0.5)"
                 keyboardType="email-address"
+                accessibilityLabel="Email address"
               />
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                placeholderTextColor="rgba(255, 255, 255, 0.5)"
-                secureTextEntry
-              />
+              <View style={styles.passwordContainer}>
+                <TextInput
+                  style={styles.passwordInput}
+                  placeholder="Password"
+                  placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                  secureTextEntry={!isPasswordVisible}
+                  accessibilityLabel="Password"
+                />
+                <TouchableOpacity
+                  onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                  accessibilityLabel={isPasswordVisible ? "Hide password" : "Show password"}
+                  accessibilityRole="button"
+                >
+                  <MaterialIcons
+                    name={isPasswordVisible ? "visibility" : "visibility-off"}
+                    size={24}
+                    color="rgba(255, 255, 255, 0.5)"
+                  />
+                </TouchableOpacity>
+              </View>
               <View style={styles.pickerContainer}>
                 <Picker
                   selectedValue={emailUserType}
@@ -166,6 +182,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     color: 'white',
     marginBottom: 16,
+  },
+  passwordContainer: {
+    ...StyleSheet.flatten(styles?.input || {}),
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16, // Ensure marginBottom matches input
+    paddingHorizontal: 16, // Ensure padding matches input
+    color: undefined, // Remove color from container
+  },
+  passwordInput: {
+    flex: 1,
+    height: '100%',
+    color: 'white',
   },
   pickerContainer: {
     height: 48,
