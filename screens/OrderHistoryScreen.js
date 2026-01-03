@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, StatusBar, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -40,7 +40,7 @@ const orders = [
   }
 ];
 
-const OrderItem = ({ item }) => (
+const OrderItem = memo(({ item }) => (
   <View style={styles.card}>
     <View style={styles.cardHeader}>
       <View>
@@ -67,7 +67,10 @@ const OrderItem = ({ item }) => (
       ))}
     </View>
   </View>
-);
+));
+
+const renderItem = ({ item }) => <OrderItem item={item} />;
+const keyExtractor = item => item.id;
 
 const OrderHistoryScreen = ({ navigation }) => {
   return (
@@ -84,9 +87,12 @@ const OrderHistoryScreen = ({ navigation }) => {
       </View>
       <FlatList
         data={orders}
-        renderItem={({ item }) => <OrderItem item={item} />}
-        keyExtractor={item => item.id}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
         contentContainerStyle={styles.listContainer}
+        initialNumToRender={5}
+        maxToRenderPerBatch={5}
+        windowSize={5}
       />
     </SafeAreaView>
   );

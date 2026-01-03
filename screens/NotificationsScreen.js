@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -17,7 +17,7 @@ const iconMap = {
   product: 'new-releases',
 };
 
-const NotificationItem = ({ item }) => (
+const NotificationItem = memo(({ item }) => (
   <View style={styles.notificationItem}>
     <View style={[styles.unreadDot, { backgroundColor: item.unread ? '#3b82f6' : 'transparent' }]} />
     <View style={styles.iconContainer}>
@@ -29,7 +29,10 @@ const NotificationItem = ({ item }) => (
     </View>
     <Text style={styles.itemTime}>{item.time}</Text>
   </View>
-);
+));
+
+const renderItem = ({ item }) => <NotificationItem item={item} />;
+const keyExtractor = item => item.id;
 
 const NotificationsScreen = ({ navigation }) => {
   return (
@@ -52,8 +55,8 @@ const NotificationsScreen = ({ navigation }) => {
       </View>
       <FlatList
         data={notifications}
-        renderItem={({ item }) => <NotificationItem item={item} />}
-        keyExtractor={item => item.id}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
         ListEmptyComponent={
           <View style={styles.footerContainer}>
             <View style={styles.footerIconContainer}>
@@ -63,6 +66,9 @@ const NotificationsScreen = ({ navigation }) => {
             <Text style={styles.footerText}>There are no new notifications for you right now.</Text>
           </View>
         }
+        initialNumToRender={10}
+        maxToRenderPerBatch={10}
+        windowSize={10}
       />
     </SafeAreaView>
   );
